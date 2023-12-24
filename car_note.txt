@@ -1,4 +1,5 @@
-1. Engine to channel 2, white wire on blue side
-2. Steering servo to channel 1, yellow wire on blue side
 Username: pi-car
 Password: picar
+1. Engine to channel 2, white wire on blue side
+2. Steering servo to channel 1, yellow wire on blue side
+3. I2C is Bus 1: sudo i2cdetect -y 1. May need to enable I2c bus in settings to see this
