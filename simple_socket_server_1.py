@@ -3,8 +3,13 @@
 import asyncio
 import websockets
 import json
+import logging
 from time import sleep
 
+logging.basicConfig(
+    format="%(asctime)s %(message)s",
+    level=logging.INFO,
+)
 
 async def handler(websocket):
     # req = await websocket.recv()
@@ -16,7 +21,7 @@ async def handler(websocket):
         print(event)
     
 async def main():
-    async with websockets.serve(handler, "localhost", 8765):
+    async with websockets.serve(handler, "", 8765):
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
