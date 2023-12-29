@@ -10,6 +10,11 @@ THROTTLE_FORWARD_PWM = 500
 THROTTLE_STOPPED_PWM = 370
 THROTTLE_REVERSE_PWM = 220
 
+# Steering Values
+STEERING_CHANNEL = 1
+STEERING_LEFT_PWM = 460
+STEERING_RIGHT_PWM = 290
+
 def clamp(n, min, max):
     if min > max:
         return clamp(n, max, min)
@@ -91,8 +96,20 @@ class PCA9685:
     def run(self, pulse):
         self.set_pulse(pulse)
 
+
 if __name__ == '__main__':   
     print('running main')
     motor = PCA9685(channel=THROTTLE_CHANNEL)
-    motor.set_pulse(0)
+    steering = PCA9685(channel=STEERING_CHANNEL)
+    motor.set_pulse(THROTTLE_STOPPED_PWM)
+    steering.set_pulse(375)
+    while True:
+        pulse = input('Enter new pulses separated by ,: ')
+        
+        motor_pulse = int(pulse.split(',')[0])
+        steering_pulse = int(pulse.split(',')[1])
+        
+        motor.set_pulse(int(motor_pulse))
+        steering.set_pulse(int(steering_pulse))
 
+# reverse is 320 to 370
