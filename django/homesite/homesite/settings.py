@@ -30,14 +30,18 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# placing daphne at the top here overides the normal django development server as well as
+# any others below it in installed apps when the runserver command is used.
 INSTALLED_APPS = [
+    "daphne",
+    "polls",
+    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "polls.apps.PollsConfig",
 ]
 
 MIDDLEWARE = [
@@ -69,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "homesite.wsgi.application"
+ASGI_APPLICATION = "homesite.asgi.application"
 
 
 # Database
