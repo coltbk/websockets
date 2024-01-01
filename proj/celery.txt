@@ -1,0 +1,2 @@
+- celery command for windows:
+<celery -A proj worker --loglevel=INFO --pool=solo>
