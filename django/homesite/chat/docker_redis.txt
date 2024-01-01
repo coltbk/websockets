@@ -1,0 +1,2 @@
+- Must runt the following command, which starts the redis server, for the synchronus chat app to work:
+<docker run --rm -p 6379:6379 redis:7>
