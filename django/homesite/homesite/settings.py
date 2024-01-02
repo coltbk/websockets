@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # any others below it in installed apps when the runserver command is used.
 INSTALLED_APPS = [
     "daphne",
+    "celery",
     "polls",
     "chat",
     "django.contrib.admin",
@@ -136,3 +137,14 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# celery settings
+# NOTE: must use the manage.py shell command in testing for result backend to work
+CELERY_BROKER_URL = 'amqp://'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TIMEZONE = 'Europe/Oslo'
+CELERY_ENABLE_UTC = True
