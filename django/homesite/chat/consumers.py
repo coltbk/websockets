@@ -115,8 +115,10 @@ class TestConsumer(AsyncWebsocketConsumer):
         print(f"from TestConsumer: {self.scope['client']}")
         print(f"from TestConsumer: {self.scope['user']}")
 
-        # send_message = "test_message"
-        # await self.send(text_data=json.dumps({"message": send_message}))
+        send_message = "test_message"
+        await self.send(text_data=json.dumps({"message": send_message}))
+        await ChatConsumer.send(text_data=json.dumps({"message": send_message}))
+        
 
     # async def receive(self, text_data):
     #     text_data_json = json.loads(text_data)
