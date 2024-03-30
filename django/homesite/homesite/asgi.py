@@ -23,11 +23,20 @@ django_asgi_app = get_asgi_application()
 
 import chat.routing
 
+# application = ProtocolTypeRouter(
+#     {
+#         "http": django_asgi_app,
+#         "websocket": AllowedHostsOriginValidator(
+#             AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+#         ),
+#     }
+# )
+# remove the aurhotrization stack to allow websokcet connections outside of http
+# https://forum.djangoproject.com/t/websocket-connection-to-django-channels/28824
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
-        "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
-        ),
+        "websocket": URLRouter(websocket_urlpatterns)
+        
     }
 )

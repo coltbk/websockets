@@ -51,7 +51,11 @@ from channels.auth import login
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
+        # need to have authmiddleware etc. to get user
+        # self.user = self.scope['user']
+        # print(f'user: {self.user}')
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
 
@@ -66,11 +70,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket, gets called once per message
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        # login the user to this session.
+        # await login(self.scope, self.user)
+        print(f'text_data: {text_data}')
+        message=text_data
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json["message"]
         print(f"from async receive: {message}")
-        print(f"from async receive: {self.scope['client']}")
-        print(f"from async receive: {self.scope['user']}")
+        # print(f"from async receive: {self.scope['client']}")
+        # print(f"from async receive: {self.scope['user']}")
         # print(self.scope)
         # print(self.group)
         # print(self.user)
@@ -117,7 +125,9 @@ class TestConsumer(AsyncWebsocketConsumer):
 
         send_message = "test_message"
         await self.send(text_data=json.dumps({"message": send_message}))
-        await ChatConsumer.send(text_data=json.dumps({"message": send_message}))
+
+        # chatty = ChatConsumer()
+        # await chatty.send(text_data=json.dumps({"message": send_message}))
         
 
     # async def receive(self, text_data):

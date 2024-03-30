@@ -1,2 +1,20 @@
 - username is coltk
 - password is passwordtest
+
+How to start this thing:
+1. navigate to the websockets dir
+2. start server: python ./django/homesite/manage.py runserver
+2a. start server on multiple ips (allowed hosts): python ./django/homesite/manage.py runserver 0.0.0.0:8000 
+3. start redis: docker run --rm -p 6379:6379 redis:7
+4. start rabbit: docker run -d -p 5672:5672 rabbitmq
+5. Navigate to django/homesite/
+6. start celery: celery -A homesite worker --loglevel=INFO --pool=solo
+
+- docker run --rm -p 6379:6379 redis:7    
+- docker run -d -p 5672:5672 rabbitmq 
+- celery -A tasks worker --loglevel=INFO --pool=solo 
+- celery -A .django/homesite worker --loglevel=INFO --pool=solo 
+- docker run --rm -p 6379:6379 redis:latest-version  
+- celery -A homesite worker --loglevel=INFO --pool=solo
+
+- python ./django/homesite/manage.py runserver
