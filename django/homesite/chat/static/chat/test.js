@@ -1,4 +1,5 @@
 
+
 const testSocket = new WebSocket(
     'ws://'
     + window.location.host
@@ -19,7 +20,7 @@ const testSocket = new WebSocket(
 
     document.addEventListener('keydown', function(event) {
         if (event.code == 'KeyZ') {
-        //   alert('Undo!')
+        alert('Undo!')
         message = "key: z"
         console.log("z was pressed")
         testSocket.send(JSON.stringify({

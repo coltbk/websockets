@@ -46,8 +46,10 @@
 
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 from channels.layers import get_channel_layer
 from channels.auth import login
+from sensors.models import SensorReading
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -121,7 +123,11 @@ class TestConsumer(AsyncWebsocketConsumer):
         # print(f"from TestConsumer: {get_channel_layer}")
         # print(self.scope)
         print(f"from TestConsumer: {self.scope['client']}")
-        print(f"from TestConsumer: {self.scope['user']}")
+        # print(f"from TestConsumer: {self.scope['user']}")
+
+        # database things
+        latest_readings = await self.get_latest_readings()
+        print(latest_readings)
 
         send_message = "test_message"
         await self.send(text_data=json.dumps({"message": send_message}))
@@ -129,9 +135,14 @@ class TestConsumer(AsyncWebsocketConsumer):
         # chatty = ChatConsumer()
         # await chatty.send(text_data=json.dumps({"message": send_message}))
         
-
     # async def receive(self, text_data):
     #     text_data_json = json.loads(text_data)
     #     message = text_data_json["message"]
     #     print(f"from TestConsumer: {message}")
     #     print(f"from TestConsumer: {get_channel_layer}")
+
+    @database_sync_to_async   
+    def get_latest_readings(self):
+        #  return SensorReading.objects.latest("date")[:5]
+         # must convert to list to get it to work
+         return list(SensorReading.objects.all())[-1]
